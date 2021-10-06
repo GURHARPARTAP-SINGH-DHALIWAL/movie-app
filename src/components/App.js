@@ -1,9 +1,31 @@
-import {data} from '../data';
+import React from 'react';
 import NavBar from './NavBar';
 import MovieCard from './MovieCard';
+import {data} from '../data';
 
 
-function App() {
+
+class App extends React.Component{
+  
+  componentDidMount(){
+
+    const store=this.props.store;
+    store.subscribe(()=>{
+      console.log("Updated");
+      this.forceUpdate();
+    });
+    this.props.store.dispatch({
+      type:'ADD_MOVIES',
+      movies:data
+    });
+
+    console.log('STATE',this.props.store.getState());
+  }
+
+ 
+  render(){
+    const movies=this.props.store.getState();
+   
   return (
     <div className="App">
       
@@ -18,9 +40,9 @@ function App() {
           <div className="list">
 
               {
-                data.map((item)=>{
+                movies.map((item,index)=>{
                   console.log(item);
-                  return  <MovieCard movie={item} />
+                  return  <MovieCard movie={item} key={`movie-${index}`}/>
                 })
               }
 
@@ -31,6 +53,8 @@ function App() {
 
     </div>
   );
+
+    }
 }
 
 export default App;
