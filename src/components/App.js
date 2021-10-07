@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from './NavBar';
 import MovieCard from './MovieCard';
 import {data} from '../data';
-import {addMovies} from '../actions/index';
+import {addMovies, showFavourtie} from '../actions/index';
 
 
 class App extends React.Component{
@@ -12,6 +12,7 @@ class App extends React.Component{
     const store=this.props.store;
     store.subscribe(()=>{
       console.log("Updated");
+      console.log('STATE',this.props.store.getState());
       this.forceUpdate();
     });
     this.props.store.dispatch(addMovies(data));
@@ -19,9 +20,30 @@ class App extends React.Component{
     console.log('STATE',this.props.store.getState());
   }
 
+  isFavourite=(movie)=>{
+
+    const {favourites}=this.props.store.getState();
+
+    const index=favourites.indexOf(movie);
+
+    console.log(movie,index);
+
+    if(index>=0)
+    return true;
+    return false;
+
+
+
+  }
+  changeTab=(val)=>{
+      this.props.store.dispatch(showFavourtie(val));
+  }
+
  
   render(){
-    const { list }=this.props.store.getState();
+    const { list,favourites,showFavourite }=this.props.store.getState();
+
+    const data=showFavourite?favourites:list;
    
   return (
     <div className="App">
@@ -30,23 +52,24 @@ class App extends React.Component{
       <div className="main">
 
           <div className="tabs">
-              <div className="tab">Movies</div>
-              <div className="tab">Favourites</div>
+              <div className={`tab ${showFavourite? ' ' :'active-tabs' }` } onClick={()=>this.changeTab(false)}>Movies</div>
+              <div  className={`tab ${showFavourite? 'active-tabs' :'' }` } onClick={()=>this.changeTab(true)}>Favourites</div>
           </div>
 
           <div className="list">
 
               {
-                list.map((item,index)=>{
-                  console.log(item);
-                  return  <MovieCard movie={item} key={`movie-${index}`}/>
+                data.map((item,index)=>{
+                  // console.log(item);
+                  return  <MovieCard movie={item} key={`movie-${index}`}  dispatch={this.props.store.dispatch}  isFavourite={this.isFavourite(item)}/>
                 })
               }
 
           </div>
 
       </div>
-
+        
+        {data.length==0?<div className="no-movies">No Movies to Show</div>:null}
 
     </div>
   );
