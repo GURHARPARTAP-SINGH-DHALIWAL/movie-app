@@ -1,5 +1,5 @@
 // Get cuurent state and the action
-import { ADD_FAVOURITE, ADD_MOVIES, REMOVE_FAVOURITE, SHOW_FAVOURITE } from "../actions";
+import { ADD_FAVOURITE, ADD_MOVIES, ADD_SEARCH_RESULT, REMOVE_FAVOURITE, SHOW_FAVOURITE ,ADD_MOVIE} from "../actions";
 import { combineReducers } from "redux";
  
 const initialState={
@@ -45,6 +45,11 @@ export  function movies(state=initialState,action){
                 ...state,
                 showFavourite:action.val
             }
+        case ADD_MOVIE:
+            return {
+                ...state,
+                list:[action.movie,...state.list]
+            }
         default:
             return state;
     }
@@ -56,7 +61,19 @@ const initialSearchState={
 };
 
 export  function search(state=initialSearchState,action)
-{
+{   
+
+    switch(action.type){
+        case ADD_SEARCH_RESULT:
+            console.log("search state",state);
+            return {
+                ...state,
+                result:action.movie
+            }
+        default:
+            return state;
+
+    }
     return state;
 }
 
