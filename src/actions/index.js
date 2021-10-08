@@ -8,6 +8,10 @@ export const SHOW_FAVOURITE='SHOW_FAVOURITE';
 
 // Action Creators
 export function addMovies(movies){
+
+    // console.log("HEy");
+
+    // Verify if dispatch is called again or not mayb it is as it modifies the data bbut it does not shows on console
     return {
         type:ADD_MOVIES,
         movies
