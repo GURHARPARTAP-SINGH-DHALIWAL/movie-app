@@ -1,4 +1,4 @@
-# Movie App
+# [Movie App](https://gsd-movies.herokuapp.com/)
 
 A app where users can search movies from a databse of over 100K+ movies and add them to their favourite list. This is a project to explore different concepts of redux in detail.
 
