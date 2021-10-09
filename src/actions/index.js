@@ -52,11 +52,11 @@ export function addMovie(movie){
 }
 
 
-export function handleMovieSearch(movie){
+export  function handleMovieSearch(movie){
     
 //    See dispatch will not wait for the action creator to return a action to get dispatchedd so we sill send thunk as an action
 
-    const url=`https://www.omdbapi.com/?apikey=9f78e0d5&t=${movie}`;
+     const url=`https://www.omdbapi.com/?apikey=9f78e0d5&t=${movie}`;
 
  return (dispatch)=>{
     fetch(url)
@@ -67,6 +67,13 @@ export function handleMovieSearch(movie){
     });
 
 }
+
+    // const response=await fetch(url);
+    // const data=await response.json();
+    // return {
+    //     type:ADD_SEARCH_RESULT,
+    //     data
+    // }
 };
 
 

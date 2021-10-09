@@ -3,6 +3,7 @@ import NavBar from './NavBar';
 import MovieCard from './MovieCard';
 import {data} from '../data';
 import {addMovies, showFavourtie} from '../actions/index';
+import { StoreContext } from '..';
 
 
 class App extends React.Component{
@@ -79,4 +80,23 @@ class App extends React.Component{
     }
 }
 
-export default App;
+class AppWrapper extends React.Component {
+  render() { 
+    return(
+      <StoreContext.Consumer>
+        {
+          (store)=>{
+            return (
+              <App store={store}/>
+            );
+          }
+        }
+       
+      </StoreContext.Consumer>
+    );
+  }
+}
+ 
+export default AppWrapper;
+
+
