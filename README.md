@@ -15,6 +15,8 @@ A app where users can search movies from a databse of over 100K+ movies and add 
 
 * OMDb API
 
+* react-redux (self developed basic version)
+
 ## Run Locally
 
 `npm install`
