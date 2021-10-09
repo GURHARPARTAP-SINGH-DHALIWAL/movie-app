@@ -13,9 +13,13 @@ A app where users can search movies from a databse of over 100K+ movies and add 
 
 * React-Context
 
+* OMDb API
 
 ## Run Locally
 
 `npm install`
 
 `npm start`
+
+
+Will connect this to Database in fututre to make it fully functional

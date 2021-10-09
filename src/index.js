@@ -46,7 +46,67 @@ class Provider extends React.Component {
   }
 }
  
+// See everytime we are wrapping the new component within a wrapper this is not good so get a connec function which binds required store data as props to the component
 
+export function connect(callback){
+  // this fucntion will retuern connected component
+  return function(Component){
+
+     class ConnectedComponent extends React.Component {
+      
+
+      // See you need constructoer else subscription will occur after render of child is called and hence initially no data will be displayed
+      constructor(props){
+              super(props);
+              const store=this.props.store;
+           this.unsubscribe=store.subscribe(()=>{
+              console.log("Updated");
+              console.log('STATE',this.props.store.getState());
+              this.forceUpdate();
+            });
+      }
+
+      componentWillUnmount()
+      {
+        this.unsubscribe();
+      }
+
+      render() {
+        const data=callback(this.props.store.getState()); 
+        return (
+       
+               
+                  
+                    <Component {...data} dispatch={this.props.store.dispatch} />
+                  
+             
+        );
+      }
+    }
+     
+
+    class ConnectedComponentWrapper extends React.Component {
+      render() { 
+        return(
+          <StoreContext.Consumer>
+            {
+              (store)=>{
+                return (
+                  <ConnectedComponent store={store}></ConnectedComponent>
+                );
+              }
+            }
+          </StoreContext.Consumer>
+        );
+      }
+    }
+     
+    return ConnectedComponentWrapper;
+  
+
+
+  }
+}
 
 
 ReactDOM.render(
